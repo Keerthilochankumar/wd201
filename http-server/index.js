@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs");
 let homecontent=""
 let projectcontent=""
-let regestration=""
+let registrationcontent=""
 const args = require("minimist")(process.argv.slice(2));
 const port = args.port || 3000;
 
@@ -16,10 +16,10 @@ fs.readFile("project.html", (err, project) => {
     throw err;}
 projectcontent=project
 });
-fs.readFile("registration.html", (err, regestration) => {
+fs.readFile("registration.html", (err, registration) => {
   if (err) {
     throw err;}
-regestrationcontent=regestration
+registrationcontent=registration
 });
 
 http
@@ -31,8 +31,8 @@ http
         response.write(projectcontent);
         response.end();
         break;
-      case "/regestration":
-          response.write(regestrationcontent);
+      case "/registration":
+          response.write(registrationcontent);
           response.end();
         break;
       default:
