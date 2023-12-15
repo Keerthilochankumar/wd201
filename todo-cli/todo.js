@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const todoList = () => {
   all = []
   const add = (todoItem) => {
@@ -48,6 +49,8 @@ const todoList = () => {
     toDisplayableList
   };
 };
+
+module.exports=todoList;
 
 // ####################################### #
 // DO NOT CHANGE ANYTHING BELOW THIS LINE. #
