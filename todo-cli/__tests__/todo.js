@@ -1,11 +1,22 @@
 const todo = require("../todo");
-const { all, add, markAsComplete, overdue, dueToday, dueLater,yesterday,tomorrow } = todo();
-const today = new Date()
+const { all, add, markAsComplete, overdue, dueToday, dueLater} = todo();
+const formattedDate = (d) => {
+  return d.toISOString().split("T")[0];
+};
+
+var dateToday = new Date();
+const today = formattedDate(dateToday);
+const yesterday = formattedDate(
+  new Date(new Date().setDate(dateToday.getDate() - 1)),
+);
+const tomorrow = formattedDate(
+  new Date(new Date().setDate(dateToday.getDate() + 1)),
+);
 describe("TODO test suite-1", () => {
   beforeAll(() => {
     add({
       title: "test todo",
-      dueDate: today.toLocaleDateString("en-CA"),
+      dueDate: tomorrow,
       completed: false
     });
   });
@@ -13,7 +24,7 @@ describe("TODO test suite-1", () => {
     let lengthBefore = all.length;
     add({
       title: "new todo",
-      dueDate: today.toLocaleDateString("en-CA"),
+      dueDate: today,
       completed: false
     });
     expect(all.length).toBe(lengthBefore+1);
@@ -24,24 +35,25 @@ describe("TODO test suite-1", () => {
     expect(all[0].completed).toBe(true);
   });
 });
-describe("todo test suit-2",()=>{
- beforeAll(() => {
-    add({ title: "clear room", dueDate: yesterday, completed: false });
-    add({ title: "Pay tax", dueDate: today, completed: true });
-    add({ title: "Service car", dueDate: today, completed: false });
-    add({ title: "arrange file", dueDate: tomorrow, completed: false });
+describe("Test part-2", () => {
+  beforeAll(() => {
+    add({ title: "Submit assignment", dueDate: yesterday, completed: false });
+    add({ title: "Pay rent", dueDate: today, completed: true });
+    add({ title: "Service Vehicle", dueDate: today, completed: false });
+    add({ title: "File taxes", dueDate: tomorrow, completed: false });
     add({ title: "Pay electric bill", dueDate: tomorrow, completed: false });
   });
-    test(" retrieval of overdue items", () => {
+
+  test(" retrieval of overdue items", () => {
     const list = overdue();
-    expect(list.length).toBe(0);
+    expect(list.length).toBe(1);
   });
   test("retrieval of due today items", () => {
     const list = dueToday();
-    expect(list.length).toBe(2);
+    expect(list.length).toBe(3);
   });
   test("Dretrieval of due later items", () => {
     const list = dueLater();
-    expect(list.length).toBe(2);
+    expect(list.length).toBe(3);
   });
-});
+})
