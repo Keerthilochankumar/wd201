@@ -11,23 +11,23 @@ describe("TODO test suite", () => {
     });
   });
   test("creating a new todo", () => {
-    let lengthBefore = all.length;
+    const lengthBefore = all.length;
     add({
-      title: "Eat",
+      title: "new todo",
       dueDate: today.toLocaleDateString("en-CA"),
       completed: false
     });
     expect(all.length).toBe(lengthBefore + 1);
   });
   test("marking a todo as completed.", () => {
-    expect(all[0].completed).toBe(false)
+    expect(all[0].completed).toBe(false);
     markAsComplete(0);
     expect(all[0].completed).toBe(true);
   });
   test("retrieval of overdue items", () => {
     const overduecount= overdue(all).length;
     add({
-      title: "work-0",
+      title: "overdue",
       dueDate: "2022-09-17",
       completed: false
     });
@@ -36,7 +36,7 @@ describe("TODO test suite", () => {
   test("retrieval of due today items", () => {
     const duetodaycount= dueToday(all).length;
     add({
-      title: "work-1",
+      title: "due today",
       dueDate: today.toLocaleDateString("en-CA"),
       completed: false
     });
@@ -45,7 +45,7 @@ describe("TODO test suite", () => {
   test("retrieval of due later items", () => {
     const duelatercount= dueLater(all).length;
     add({
-      title: "work-2",
+      title: "duelater",
       dueDate: "2022-09-20",
       completed: false
     });
