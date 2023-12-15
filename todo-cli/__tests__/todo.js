@@ -5,7 +5,7 @@ const today =new Date().toLocaleDateString("en-CA");
 describe("TODO test suite", () => {
   beforeAll(() => {
     add({
-      title: "Charge Device",
+      title: "new todo",
       dueDate: today,
       completed: true,
     });
