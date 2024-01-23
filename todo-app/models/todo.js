@@ -59,7 +59,6 @@ module.exports = (sequelize, DataTypes) => {
     static addTodo({ title, dueDate }) {
       return this.create({ title: title, dueDate: dueDate, completed: false });
     }
-
     static async remove(id) {
       return this.destroy({
         where: {
@@ -72,8 +71,8 @@ module.exports = (sequelize, DataTypes) => {
     //   if (this.completed == true) return this.update({ completed: false });
     //   else return this.update({ completed: true });
     // }
-    setCompletionStatus(torf) {
-      return this.update({ completed: torf });
+    setCompletionStatus(value) {
+      return this.update({ completed: value });
     }
   }
   Todo.init(
