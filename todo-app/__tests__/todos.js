@@ -19,7 +19,7 @@ describe("Todo Test Suite", () => {
       dueDate: new Date().toISOString(),
       completed: false,
     });
-    expect(res.statusCode).toBe(200);
+    expect(res.statusCode).toBe(302);
     let parsedResponse = JSON.parse(res.text);
     expect(parsedResponse.completed).toBe(false);
   });
@@ -49,7 +49,7 @@ describe("Todo Test Suite", () => {
       dueDate: new Date().toISOString(),
       completed: false,
     });
-    expect(res.statusCode).toBe(200);
+    expect(res.statusCode).toBe(302);
     let parsedResponse = JSON.parse(res.text);
     const id = parsedResponse.id;
     res = await agent.put(`/todos/${id}/markAsCompleted`).send();
@@ -64,7 +64,7 @@ describe("Todo Test Suite", () => {
       dueDate: new Date().toISOString(),
       completed: false,
     });
-    expect(res.statusCode).toBe(200);
+    expect(res.statusCode).toBe(302);
     let parsedResponse = JSON.parse(res.text);
     const id = parsedResponse.id;
     res = await agent.delete(`/todos/${id}`).send();
