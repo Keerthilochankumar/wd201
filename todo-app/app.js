@@ -49,6 +49,7 @@ app.get("/", function (request, response) {
 
 app.get("/todos", async function (_request, response) {
   console.log("Processing list of all Todos ...");
+
   try {
     const todos = await Todo.findAll({
       order: [["id", "ASC"]],
@@ -97,7 +98,7 @@ app.put("/todos/:id", async function (request, response) {
 
 app.delete("/todos/:id", async function (request, response) {
   console.log("We have to delete a Todo with ID: ", request.params.id);
-
+ 
   try {
     const result = await Todo.remove(request.params.id);
     return response.json({ success: result == 1 });
