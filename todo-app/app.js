@@ -69,7 +69,55 @@ passport.use(
     }
   )
 );
+/*async function addInitialValues(id) {
+  try {
+    const val = Todo.findOne({title:"Task 1",userId:id})
+    console.log(val)
+    console.log(id);
+    if(!val){
+    await Todo.bulkCreate([
+      { title: "Task 1", dueDate: "2024-01-23",completed:false, userId:id},
+      { title: "Task 2", dueDate: "2024-01-24",completed:false, userId:id},
+      { title: "Task 3", dueDate: "2024-01-25",completed:false, userId:id},
+      { title: "Task 3", dueDate: "2024-01-25",completed:true, userId:id},
+    ]);
+    console.log("Initial values added successfully.");
+    }
+  } catch (error) {
+    console.error("Error adding initial values:", error);
+  }
+}
+*/
+app.get("/", async (request, response) => {
+  try {
+    const overduetodos = await Todo.overdue();
+    const duetodaytodos = await Todo.dueToday();
+    const duelatertodos = await Todo.dueLater();
+    const completedtodos = await Todo.completedTodos();
 
+    if (request.accepts("html")) {
+      response.render("index", {
+        title: "To-Do Manager",
+        overduetodos,
+        duetodaytodos,
+        duelatertodos,
+        completedtodos,
+        csrfToken: request.csrfToken(),
+      });
+    } else {
+      response.json({
+        overduetodos,
+        duetodaytodos,
+        duelatertodos,
+        completedtodos,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return response.status(422).json(error);
+
+  }
+});
 passport.serializeUser((user, done) => {
   console.log("serializing user in session", user.id);
   done(null, user.id);
@@ -111,6 +159,7 @@ app.get(
     const completedItems = await Todo.completedItems(loggedInUser);
     const user = await User.findByPk(loggedInUser);
     const userName = user.dataValues.firstName;
+    //addInitialValues(loggedInUser);
     if (request.accepts("html")) {
       response.render("todos", {
         allTodos,
