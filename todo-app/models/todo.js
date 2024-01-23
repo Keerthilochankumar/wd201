@@ -1,5 +1,4 @@
 "use strict";
-const { Op, where } = require("sequelize");
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
@@ -11,68 +10,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+    static addTodo({ title, dueDate }) {
+      return this.create({ title, dueDate, completed: false });
+    }
+
+    setCompletionStatus(status) {
+      return this.update({ completed: status });
+    }
     static getTodos() {
       return this.findAll();
-    }
-    static async overdue() {
-      return await Todo.findAll({
-        where: {
-          dueDate: {
-            [Op.lt]: new Date(),
-          },
-          completed: false,
-        },
-        order: [["id", "ASC"]],
-      });
-    }
-    static async dueToday() {
-      return await Todo.findAll({
-        where: {
-          dueDate: {
-            [Op.eq]: new Date(),
-          },
-          completed: false,
-        },
-        order: [["id", "ASC"]],
-      });
-    }
-    static async dueLater() {
-      return await Todo.findAll({
-        where: {
-          dueDate: {
-            [Op.gt]: new Date(),
-          },
-          completed: false,
-        },
-        order: [["id", "ASC"]],
-      });
-    }
-    static async completedTodos() {
-      return await Todo.findAll({
-        where: {
-          completed: true,
-        },
-        order: [["id", "ASC"]],
-      });
-    }
-
-    static addTodo({ title, dueDate }) {
-      return this.create({ title: title, dueDate: dueDate, completed: false });
-    }
-    static async remove(id) {
-      return this.destroy({
-        where: {
-          id,
-        },
-      });
-    }
-
-    // markAsCompleted() {
-    //   if (this.completed == true) return this.update({ completed: false });
-    //   else return this.update({ completed: true });
-    // }
-    setCompletionStatus(value) {
-      return this.update({ completed: value });
     }
   }
   Todo.init(
