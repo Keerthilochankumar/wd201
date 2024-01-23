@@ -71,8 +71,8 @@ module.exports = (sequelize, DataTypes) => {
     //   if (this.completed == true) return this.update({ completed: false });
     //   else return this.update({ completed: true });
     // }
-    setCompletionStatus(value) {
-      return this.update({ completed: value });
+    setCompletionStatus(torf) {
+      return this.update({ completed: torf });
     }
   }
   Todo.init(
