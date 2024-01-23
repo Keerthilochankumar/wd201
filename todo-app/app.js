@@ -39,6 +39,7 @@ app.get("/", async (request, response) => {
   } catch (error) {
     console.log(error);
     return response.status(422).json(error);
+
   }
 });
 

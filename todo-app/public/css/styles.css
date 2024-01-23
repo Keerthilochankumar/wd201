@@ -1,3 +1,4 @@
+
 body {
   color: black;
   background-color: white;
@@ -5,4 +6,3 @@ body {
 }
 .todo-item:hover .delete-icon {
   display: block;
-}
